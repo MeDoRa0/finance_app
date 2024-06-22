@@ -1,4 +1,5 @@
 import 'package:finance_app/pages/home.dart';
+import 'package:finance_app/pages/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,8 +13,9 @@ class Finance_app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: HomePage(),
+      home: SplashScreen(),
     );
   }
 }
