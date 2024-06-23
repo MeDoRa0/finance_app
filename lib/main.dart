@@ -1,4 +1,5 @@
 import 'package:finance_app/pages/home.dart';
+import 'package:finance_app/pages/on_boarding.dart';
 import 'package:finance_app/pages/splash.dart';
 import 'package:flutter/material.dart';
 
