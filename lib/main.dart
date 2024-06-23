@@ -1,5 +1,3 @@
-import 'package:finance_app/pages/home.dart';
-import 'package:finance_app/pages/on_boarding.dart';
 import 'package:finance_app/pages/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +11,7 @@ class Finance_app extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       home: SplashScreen(),
