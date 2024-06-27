@@ -1,5 +1,3 @@
-import 'package:finance_app/styles/colors.dart';
-import 'package:finance_app/widgets/add_minus_button.dart';
 import 'package:finance_app/widgets/add_minus_widget.dart';
 import 'package:finance_app/widgets/my_balance.dart';
 import 'package:finance_app/widgets/today.dart';
