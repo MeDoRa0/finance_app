@@ -22,7 +22,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(),
+              builder: (context) => AddPage(isIncome: true,),
             ),
           ),
         ),
@@ -33,7 +33,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(),
+              builder: (context) => AddPage(isIncome: false,),
             ),
           ),
           text: 'Expense',

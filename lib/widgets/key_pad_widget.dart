@@ -1,3 +1,4 @@
+import 'package:finance_app/widgets/key_pad_item.dart';
 import 'package:flutter/material.dart';
 
 class customKeyPad extends StatelessWidget {
@@ -105,7 +106,9 @@ class customKeyPad extends StatelessWidget {
                     num: '<',
                     onTap: () {
                       onValueChanged(
-                        value == '' ? value : value.substring(0, value.length - 1),
+                        value == ''
+                            ? value
+                            : value.substring(0, value.length - 1),
                       );
                     },
                   ),
@@ -113,32 +116,6 @@ class customKeyPad extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class KeyPadItem extends StatelessWidget {
-  final String num;
-  final VoidCallback onTap;
-
-  KeyPadItem({required this.num, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          margin: EdgeInsets.all(4.0),
-          color: Colors.grey[300],
-          child: Center(
-            child: Text(
-              num,
-              style: TextStyle(fontSize: 24.0),
-            ),
-          ),
         ),
       ),
     );
