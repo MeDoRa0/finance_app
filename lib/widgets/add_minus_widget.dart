@@ -1,5 +1,7 @@
+import 'package:finance_app/pages/add_page.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:finance_app/widgets/add_minus_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddMinusWidget extends StatelessWidget {
@@ -12,20 +14,34 @@ class AddMinusWidget extends StatelessWidget {
     return Row(
       children: [
         AddMinusButton(
-            text: 'plus',
-            icon: Icons.add,
-            iconColor: kPrimaryGreen,
-            textColor: kPrimaryGreen,
-            color: kSecondaryGreen),
+          text: 'Income',
+          icon: Icons.add,
+          iconColor: kPrimaryGreen,
+          textColor: kPrimaryGreen,
+          color: kSecondaryGreen,
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddPage(),
+            ),
+          ),
+        ),
         const SizedBox(
           width: 10,
         ),
         AddMinusButton(
-            text: 'minus',
-            icon: Icons.remove,
-            iconColor: kPrimaryRed,
-            textColor: kPrimaryRed,
-            color: kSecondaryRed),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddPage(),
+            ),
+          ),
+          text: 'Expense',
+          icon: Icons.remove,
+          iconColor: kPrimaryRed,
+          textColor: kPrimaryRed,
+          color: kSecondaryRed,
+        ),
       ],
     );
   }

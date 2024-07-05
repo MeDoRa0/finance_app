@@ -10,3 +10,5 @@ Color kPrimaryPurple = const Color(0xff62249F);
 Color kPrimaryGreen = const Color(0xff097947);
 Color kPrimaryBlue = const Color(0xff01536B);
 Color kPrimaryRed = const Color(0xff712911);
+Color kPrimaryOrange = Color(0xffFF6600);
+Color kSecondaryOrange = Color(0xffFFCC99);

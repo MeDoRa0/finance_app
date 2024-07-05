@@ -32,17 +32,17 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 16,
             ),
-            AddMinusWidget(),
-            SizedBox(
+            const AddMinusWidget(),
+            const SizedBox(
               height: 16,
             ),
             Row(
               children: [
-                Text('Activity'),
-                Spacer(),
+                const Text('Activity'),
+                const Spacer(),
                 GestureDetector(
                   onTap: () {},
-                  child: Text('see all'),
+                  child: const Text('see all'),
                 ),
               ],
             ),
@@ -53,8 +53,8 @@ class _HomePageState extends State<HomePage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
+                    padding: const EdgeInsets.all(8),
+                    child: const Row(
                       children: [
                         CircleAvatar(),
                         SizedBox(
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-            ))
+            ),)
           ],
         ),
       ),
