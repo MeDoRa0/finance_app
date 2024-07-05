@@ -34,13 +34,14 @@ dependencies:
   flutter_svg: ^2.0.10+1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  table_calendar: ^3.1.2
 
 dev_dependencies:
-  hive_generator: 
-  build_runner:
+  build_runner: null
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  hive_generator: null
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

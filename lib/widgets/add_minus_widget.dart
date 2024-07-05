@@ -22,7 +22,9 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(isIncome: true,),
+              builder: (context) => AddPage(
+                isIncome: true,
+              ),
             ),
           ),
         ),
@@ -33,14 +35,16 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(isIncome: false,),
+              builder: (context) => AddPage(
+                isIncome: false,
+              ),
             ),
           ),
           text: 'Expense',
           icon: Icons.remove,
-          iconColor: kPrimaryRed,
-          textColor: kPrimaryRed,
-          color: kSecondaryRed,
+          iconColor: kPrimaryOrange,
+          textColor: kPrimaryOrange,
+          color: kSecondaryOrange,
         ),
       ],
     );

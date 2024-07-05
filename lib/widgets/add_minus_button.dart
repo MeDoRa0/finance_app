@@ -1,4 +1,3 @@
-import 'package:finance_app/pages/add_page.dart';
 import 'package:flutter/material.dart';
 
 class AddMinusButton extends StatelessWidget {
@@ -40,7 +39,7 @@ class AddMinusButton extends StatelessWidget {
               ),
               Text(
                 text,
-                style: TextStyle(color: textColor),
+                style: TextStyle(color: textColor, fontSize: 16),
               ),
             ],
           ),
