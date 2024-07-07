@@ -16,6 +16,8 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  TextEditingController detailsCont = TextEditingController();
+
   String value = '';
   @override
   Widget build(BuildContext context) {
@@ -26,71 +28,80 @@ class _AddPageState extends State<AddPage> {
       //provide AddDataCubit to the add page;
       body: BlocProvider(
         create: (context) => AddDataCubit(),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
+        child: BlocBuilder<AddDataCubit, AddDataState>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: CustomTextfield(
-                      labelText: 'details..',
-                      labelColor: kPrimaryPurple,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: widget.isIncome
-                            ? kSecondaryGreen
-                            : kSecondaryOrange,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          widget.isIncome
-                              ? (value == '' ? '+ 0.0' : '+$value')
-                              : (value == '' ? '- 0.0' : '-$value'),
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                              color: widget.isIncome
-                                  ? kPrimaryGreen
-                                  : kPrimaryOrange),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextfield(
+                          labelText: 'details..',
+                          labelColor: kPrimaryPurple,
+                          controller: detailsCont,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: widget.isIncome
+                                ? kSecondaryGreen
+                                : kSecondaryOrange,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.isIncome
+                                  ? (value == '' ? '+ 0.0' : '+$value')
+                                  : (value == '' ? '- 0.0' : '-$value'),
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500,
+                                  color: widget.isIncome
+                                      ? kPrimaryGreen
+                                      : kPrimaryOrange),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
+                  ),
+                  customKeyPad(
+                    value: value,
+                    onValueChanged: (newValue) {
+                      setState(() {
+                        value = newValue;
+                      });
+                    },
+                  ),
+                  const Spacer(),
+                  Row(
+                    children: [
+                      DoneButton(
+                        detailsCont: detailsCont,
+                        value: value,
+                        isIncome: widget.isIncome,
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      const CancelButton(),
+                    ],
                   ),
                 ],
               ),
-              customKeyPad(
-                value: value,
-                onValueChanged: (newValue) {
-                  setState(() {
-                    value = newValue;
-                  });
-                },
-              ),
-              const Spacer(),
-              const Row(
-                children: [
-                  DoneButton(),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  CancelButton(),
-                ],
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

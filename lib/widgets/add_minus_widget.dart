@@ -1,7 +1,6 @@
 import 'package:finance_app/pages/add_page.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:finance_app/widgets/add_minus_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddMinusWidget extends StatelessWidget {
@@ -22,7 +21,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(
+              builder: (context) => const AddPage(
                 isIncome: true,
               ),
             ),
@@ -35,7 +34,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPage(
+              builder: (context) => const AddPage(
                 isIncome: false,
               ),
             ),

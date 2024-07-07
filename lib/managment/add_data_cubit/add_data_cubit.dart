@@ -8,11 +8,11 @@ part 'add_data_state.dart';
 class AddDataCubit extends Cubit<AddDataState> {
   AddDataCubit() : super(AddDataInitial());
 
-  addData(FinanceModel financeModel) {
+  addData(FinanceModel financeModel) async {
     emit(AddDataLoading());
     try {
       //this method to add data into box
-      Hive.box<FinanceModel>('financeBox').add(financeModel);
+      await Hive.box<FinanceModel>('financeBox').add(financeModel);
       emit(
         AddDataSuccess(),
       );
