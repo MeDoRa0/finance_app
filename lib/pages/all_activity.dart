@@ -23,6 +23,7 @@ class _AllActivityPageState extends State<AllActivityPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
+            //this widget to build a table calnder 
             TableCalendar(
               firstDay: DateTime(2024),
               lastDay: DateTime.now(),
