@@ -1,5 +1,8 @@
+import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
+import 'package:finance_app/models/finance_model.dart';
 import 'package:finance_app/widgets/activity_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AllActivityPage extends StatefulWidget {
@@ -23,7 +26,7 @@ class _AllActivityPageState extends State<AllActivityPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            //this widget to build a table calnder 
+            //this widget to build a table calnder
             TableCalendar(
               firstDay: DateTime(2024),
               lastDay: DateTime.now(),
@@ -49,9 +52,14 @@ class _AllActivityPageState extends State<AllActivityPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 5,
+                itemCount:
+                    BlocProvider.of<FetchDataCubit>(context).finanacList.length,
                 itemBuilder: (context, index) {
-                  return ActivityItem();
+                  List<FinanceModel> myList =
+                      BlocProvider.of<FetchDataCubit>(context).finanacList;
+                  return ActivityItem(
+                    financeModel: myList[index],
+                  );
                 },
               ),
             ),

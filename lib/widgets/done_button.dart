@@ -1,4 +1,5 @@
 import 'package:finance_app/managment/add_data_cubit/add_data_cubit.dart';
+import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
 import 'package:finance_app/models/finance_model.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class DoneButton extends StatelessWidget {
               ),
             );
             print("Data added successfully.");
+            BlocProvider.of<FetchDataCubit>(context).fetchData();
             Navigator.pop(context);
           } on Exception catch (e) {
             print("Error: $e");
