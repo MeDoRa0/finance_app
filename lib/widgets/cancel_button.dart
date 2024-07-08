@@ -18,7 +18,9 @@ class CancelButton extends StatelessWidget {
           foregroundColor: kPrimaryRed,
           padding: EdgeInsets.all(20),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pop(context);
+        },
         child: Text('Camcel'),
       ),
     );

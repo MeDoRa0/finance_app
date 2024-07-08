@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'finance_model.g.dart';
 
 @HiveType(typeId: 1)
-class FinanceModel {
+class FinanceModel extends HiveObject { //extend HiveObject so we can edit and delete
    @HiveField(0)
   String details;
    @HiveField(1)

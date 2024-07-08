@@ -1,4 +1,5 @@
 import 'package:finance_app/managment/add_data_cubit/add_data_cubit.dart';
+import 'package:finance_app/models/finance_model.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:finance_app/widgets/cancel_button.dart';
 import 'package:finance_app/widgets/custom_text_field.dart';
@@ -8,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({super.key, required this.isIncome});
+  AddPage({super.key, required this.isIncome, this.financeModel});
   final bool isIncome;
+  FinanceModel? financeModel;
 
   @override
   State<AddPage> createState() => _AddPageState();
@@ -19,6 +21,23 @@ class _AddPageState extends State<AddPage> {
   TextEditingController detailsCont = TextEditingController();
 
   String value = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.financeModel != null) {
+      setState(
+        () {
+          detailsCont.text = widget.financeModel!.details;
+
+          value = widget.financeModel!.financeValue < 0
+              ? (widget.financeModel!.financeValue * -1).toString()
+              : (widget.financeModel!.financeValue).toString();
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +110,7 @@ class _AddPageState extends State<AddPage> {
                         detailsCont: detailsCont,
                         value: value,
                         isIncome: widget.isIncome,
+                        financeModel: widget.financeModel,
                       ),
                       const SizedBox(
                         width: 16,

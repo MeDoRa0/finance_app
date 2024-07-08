@@ -9,12 +9,14 @@ class DoneButton extends StatelessWidget {
   final TextEditingController detailsCont;
   final String value;
   final bool isIncome;
+  final FinanceModel? financeModel;
 
   const DoneButton({
     super.key,
     required this.detailsCont,
     required this.value,
     required this.isIncome,
+    this.financeModel,
   });
 
   @override
@@ -31,15 +33,29 @@ class DoneButton extends StatelessWidget {
         ),
         onPressed: () {
           try {
-            BlocProvider.of<AddDataCubit>(context).addData(
-              FinanceModel(
-                details: detailsCont.text,
-                // parse to convert value to double
-                financeValue:
-                    isIncome ? double.parse(value) : double.parse(value) * -1,
-                date: DateTime.now(),
-              ),
-            );
+            if (financeModel != null) {
+              financeModel!.details = detailsCont.text;
+              //check if isIncome is true get the value as it is,
+              financeModel!.financeValue = isIncome
+                  ? double.parse(value)
+                  //if false ,check if the value is less than 0 get the value as it is
+                  : double.parse(value) < 0
+                      ? double.parse(value)
+                      //if greater than 0 Multiply the value by -1.
+
+                      : double.parse(value) * -1;
+              financeModel!.save();
+            } else {
+              BlocProvider.of<AddDataCubit>(context).addData(
+                FinanceModel(
+                  details: detailsCont.text,
+                  // parse to convert value to double
+                  financeValue:
+                      isIncome ? double.parse(value) : double.parse(value) * -1,
+                  date: DateTime.now(),
+                ),
+              );
+            }
             print("Data added successfully.");
             BlocProvider.of<FetchDataCubit>(context).fetchData();
             Navigator.pop(context);
@@ -47,7 +63,7 @@ class DoneButton extends StatelessWidget {
             print("Error: $e");
           }
         },
-        child: const Text('Done'),
+        child: Text(financeModel != null ? 'Save' : 'Add'),
       ),
     );
   }

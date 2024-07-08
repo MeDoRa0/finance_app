@@ -21,7 +21,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddPage(
+              builder: (context) =>  AddPage(
                 isIncome: true,
               ),
             ),
@@ -34,7 +34,7 @@ class AddMinusWidget extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddPage(
+              builder: (context) =>  AddPage(
                 isIncome: false,
               ),
             ),
