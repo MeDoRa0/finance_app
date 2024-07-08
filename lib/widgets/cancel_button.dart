@@ -1,5 +1,7 @@
+import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CancelButton extends StatelessWidget {
   const CancelButton({
@@ -16,12 +18,13 @@ class CancelButton extends StatelessWidget {
           ),
           backgroundColor: kSecondaryRed,
           foregroundColor: kPrimaryRed,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
         ),
         onPressed: () {
+          BlocProvider.of<FetchDataCubit>(context).fetchData();
           Navigator.pop(context);
         },
-        child: Text('Camcel'),
+        child: const Text('Camcel'),
       ),
     );
   }

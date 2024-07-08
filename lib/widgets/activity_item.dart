@@ -1,7 +1,9 @@
+import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
 import 'package:finance_app/models/finance_model.dart';
 import 'package:finance_app/pages/add_page.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ActivityItem extends StatelessWidget {
@@ -20,17 +22,40 @@ class ActivityItem extends StatelessWidget {
     final formattedDate = formatter.format(financeModel.date);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
+      child: Dismissible(
+        background: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(color: kSecondryYellow),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(
+              Icons.edit,
+              color: kPrimaryYellow,
+            ),
+          ),
+        ),
+        secondaryBackground: Container(
+          decoration: BoxDecoration(color: kSecondaryRed),
+          child: Align(
+              alignment: Alignment.centerRight, child: Icon(Icons.delete,color: kPrimaryRed,),),
+        ),
+        onDismissed: (direction) {
+          if (direction == DismissDirection.startToEnd) {
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => AddPage(
                   isIncome: financeModel.financeValue > 0 ? true : false,
                   financeModel: financeModel,
                 ),
-              ));
+              ),
+            );
+          } else if (direction == DismissDirection.endToStart) {
+            financeModel.delete();
+            BlocProvider.of<FetchDataCubit>(context).fetchData();
+          }
         },
+        key: UniqueKey(),
         child: Container(
           padding: const EdgeInsets.all(8),
           child: Row(
@@ -60,3 +85,4 @@ class ActivityItem extends StatelessWidget {
     );
   }
 }
+
