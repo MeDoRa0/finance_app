@@ -37,7 +37,7 @@ class MyBalance extends StatelessWidget {
                         Text(
                           //this to update my balance value
                           state.sum.toString(),
-                          style: TextStyle(color: kWhiteColor),
+                          style: TextStyle(color: kWhiteColor, fontSize: 16),
                         ),
                       ],
                     );

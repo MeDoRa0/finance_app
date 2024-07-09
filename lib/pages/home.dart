@@ -84,12 +84,12 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: ListView.builder(
                           itemCount: BlocProvider.of<FetchDataCubit>(context)
-                              .finanacList
+                              .todayFinanacList
                               .length,
                           itemBuilder: (context, index) {
                             List<FinanceModel> myList = BlocProvider.of<
                                     FetchDataCubit>(context)
-                                .finanacList
+                                .todayFinanacList
                                 .reversed
                                 .toList(); //reversed so it show the last value on top
                             return ActivityItem(
