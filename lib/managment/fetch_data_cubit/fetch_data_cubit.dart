@@ -8,6 +8,7 @@ part 'fetch_data_state.dart';
 class FetchDataCubit extends Cubit<FetchDataState> {
   FetchDataCubit() : super(FetchDataInitial());
   List<FinanceModel> finanacList = [];
+  double sum = 0.0;
 
   fetchData() {
     emit(FetchDataLoading());
@@ -15,7 +16,12 @@ class FetchDataCubit extends Cubit<FetchDataState> {
     try {
       //hive return box but we need list , to convert box to list we put .value.tolist
       finanacList = Hive.box<FinanceModel>('financeBox').values.toList();
-      emit(FetchDataSuccess());
+      //this method to sum all values to get my balance
+      sum = 0; // make the sum = 0 after fetch the value then do the method
+      for (var element in finanacList) {
+        sum += element.financeValue;
+      }
+      emit(FetchDataSuccess(sum));
     } on Exception catch (e) {
       emit(
         FetchDataFailure(
