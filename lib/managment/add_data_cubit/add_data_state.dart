@@ -9,6 +9,7 @@ final class AddDataLoading extends AddDataState {}
 
 final class AddDataSuccess extends AddDataState {}
 
+
 final class AddDataFailure extends AddDataState {
   String error;
   AddDataFailure(this.error);

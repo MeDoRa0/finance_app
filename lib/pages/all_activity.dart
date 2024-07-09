@@ -17,54 +17,73 @@ class _AllActivityPageState extends State<AllActivityPage> {
   DateTime mySelectedDay = DateTime.now();
   DateTime myFocusedDay = DateTime.now();
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<FetchDataCubit>(context)
+        .fetchDateDate(dateTime: mySelectedDay);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Activites'),
+        title: const Text('All Activites'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            //this widget to build a table calnder
-            TableCalendar(
-              firstDay: DateTime(2024),
-              lastDay: DateTime.now(),
-              focusedDay: myFocusedDay,
-              calendarFormat: calendarFormat,
-              onFormatChanged: (format) {
-                setState(() {
-                  calendarFormat = format;
-                });
-              },
-              currentDay: mySelectedDay,
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(
-                  () {
-                    mySelectedDay = selectedDay;
-                    myFocusedDay = focusedDay;
+      body: BlocBuilder<FetchDataCubit, FetchDataState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                //this widget to build a table calnder
+                TableCalendar(
+                  firstDay: DateTime(2024),
+                  lastDay: DateTime.now(),
+                  focusedDay: myFocusedDay,
+                  calendarFormat: calendarFormat,
+                  onFormatChanged: (format) {
+                    setState(() {
+                      calendarFormat = format;
+                    });
                   },
-                );
-              },
+                  currentDay: mySelectedDay,
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(
+                      () {
+                        mySelectedDay = selectedDay;
+                        myFocusedDay = focusedDay;
+                        BlocProvider.of<FetchDataCubit>(context).selectedTime =
+                            selectedDay;
+                      },
+                    );
+                    // fetch data every time i select a day to show items of this day
+                    BlocProvider.of<FetchDataCubit>(context)
+                        .fetchDateDate(dateTime: mySelectedDay);
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: BlocProvider.of<FetchDataCubit>(context)
+                        .todayFinanacList
+                        .length,
+                    itemBuilder: (context, index) {
+                      List<FinanceModel> myList =
+                          BlocProvider.of<FetchDataCubit>(context)
+                              .todayFinanacList;
+                      return ActivityItem(
+                        financeModel: myList[index],
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount:
-                    BlocProvider.of<FetchDataCubit>(context).finanacList.length,
-                itemBuilder: (context, index) {
-                  List<FinanceModel> myList =
-                      BlocProvider.of<FetchDataCubit>(context).finanacList;
-                  return ActivityItem(
-                    financeModel: myList[index],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

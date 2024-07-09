@@ -58,6 +58,9 @@ class DoneButton extends StatelessWidget {
             }
             print("Data added successfully.");
             BlocProvider.of<FetchDataCubit>(context).fetchData();
+            BlocProvider.of<FetchDataCubit>(context).fetchDateDate(
+                dateTime:
+                    BlocProvider.of<FetchDataCubit>(context).selectedTime);
             Navigator.pop(context);
           } on Exception catch (e) {
             print("Error: $e");
