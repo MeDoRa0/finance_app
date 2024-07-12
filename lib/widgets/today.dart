@@ -1,4 +1,5 @@
 import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
+
 import 'package:finance_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

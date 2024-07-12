@@ -12,7 +12,12 @@ class FetchDataCubit extends Cubit<FetchDataState> {
   List<FinanceModel> todayFinanacList = [];
   double sum = 0.0;
   double todaySum = 0.0;
-  DateTime selectedTime=DateTime.now();
+  DateTime selectedTime = DateTime.now();
+
+   // Reset selected date to today
+  void resetDateToToday() {
+    selectedTime = DateTime.now();
+  }
 
   fetchData() {
     emit(FetchDataLoading());

@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // Reset selected date to today and fetch data
+    BlocProvider.of<FetchDataCubit>(context).resetDateToToday();
     BlocProvider.of<FetchDataCubit>(context).fetchData();
   }
 

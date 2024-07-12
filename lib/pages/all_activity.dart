@@ -16,12 +16,29 @@ class _AllActivityPageState extends State<AllActivityPage> {
   CalendarFormat calendarFormat = CalendarFormat.week;
   DateTime mySelectedDay = DateTime.now();
   DateTime myFocusedDay = DateTime.now();
-  @override
+  late FetchDataCubit _fetchDataCubit;
+
+  /* @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     BlocProvider.of<FetchDataCubit>(context)
         .fetchDateDate(dateTime: mySelectedDay);
+  }*/
+  @override
+  void initState() {
+    super.initState();
+    _fetchDataCubit = BlocProvider.of<FetchDataCubit>(context);
+    _fetchDataCubit.fetchDateDate(dateTime: mySelectedDay);
+  }
+
+  @override
+  void dispose() {
+    // Reset the selected date to today when leaving the page
+    _fetchDataCubit.resetDateToToday();
+    _fetchDataCubit.fetchData();
+    super.dispose();
   }
 
   @override
@@ -53,13 +70,11 @@ class _AllActivityPageState extends State<AllActivityPage> {
                       () {
                         mySelectedDay = selectedDay;
                         myFocusedDay = focusedDay;
-                        BlocProvider.of<FetchDataCubit>(context).selectedTime =
-                            selectedDay;
+                        _fetchDataCubit.selectedTime = selectedDay;
                       },
                     );
                     // fetch data every time i select a day to show items of this day
-                    BlocProvider.of<FetchDataCubit>(context)
-                        .fetchDateDate(dateTime: mySelectedDay);
+                    _fetchDataCubit.fetchDateDate(dateTime: mySelectedDay);
                   },
                 ),
                 const SizedBox(
@@ -67,13 +82,10 @@ class _AllActivityPageState extends State<AllActivityPage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: BlocProvider.of<FetchDataCubit>(context)
-                        .todayFinanacList
-                        .length,
+                    itemCount: _fetchDataCubit.todayFinanacList.length,
                     itemBuilder: (context, index) {
                       List<FinanceModel> myList =
-                          BlocProvider.of<FetchDataCubit>(context)
-                              .todayFinanacList;
+                          _fetchDataCubit.todayFinanacList;
                       return ActivityItem(
                         financeModel: myList[index],
                       );
