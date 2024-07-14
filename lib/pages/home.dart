@@ -7,6 +7,7 @@ import 'package:finance_app/widgets/my_balance.dart';
 import 'package:finance_app/widgets/today.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,90 +22,99 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // Reset selected date to today and fetch data
-    BlocProvider.of<FetchDataCubit>(context).resetDateToToday();
+
     BlocProvider.of<FetchDataCubit>(context).fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome, Mohamed'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('darkModeBox').listenable(),
+      builder: (context, box, child) {
+        var darkMode = box.get('darkMode', defaultValue: false);
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Welcome, Mohamed'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  box.put('darkMode', !darkMode);
+                },
+                icon: const Icon(Icons.settings),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: BlocBuilder<FetchDataCubit, FetchDataState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: state is FetchDataLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    children: [
-                      const MyBalance(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const TodayBox(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const AddMinusWidget(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Row(
+          body: BlocBuilder<FetchDataCubit, FetchDataState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: state is FetchDataLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Column(
                         children: [
-                          const Text(
-                            'Activities',
-                            style: TextStyle(fontSize: 18),
+                          const MyBalance(),
+                          const SizedBox(
+                            height: 20,
                           ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AllActivityPage(),
+                          const TodayBox(),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          const AddMinusWidget(),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Activities',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AllActivityPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'See All',
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              );
-                            },
-                            child: const Text(
-                              'See All',
-                              style: TextStyle(fontSize: 18),
-                            ),
+                              ),
+                            ],
                           ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount:
+                                  BlocProvider.of<FetchDataCubit>(context)
+                                      .todayFinanacList
+                                      .length,
+                              itemBuilder: (context, index) {
+                                List<FinanceModel> myList = BlocProvider.of<
+                                        FetchDataCubit>(context)
+                                    .todayFinanacList
+                                    .reversed
+                                    .toList(); //reversed so it show the last value on top
+                                return ActivityItem(
+                                  financeModel: myList[index],
+                                );
+                              },
+                            ),
+                          )
                         ],
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: BlocProvider.of<FetchDataCubit>(context)
-                              .todayFinanacList
-                              .length,
-                          itemBuilder: (context, index) {
-                            List<FinanceModel> myList = BlocProvider.of<
-                                    FetchDataCubit>(context)
-                                .todayFinanacList
-                                .reversed
-                                .toList(); //reversed so it show the last value on top
-                            return ActivityItem(
-                              financeModel: myList[index],
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-          );
-        },
-      ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

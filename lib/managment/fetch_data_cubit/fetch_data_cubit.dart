@@ -10,14 +10,10 @@ class FetchDataCubit extends Cubit<FetchDataState> {
   FetchDataCubit() : super(FetchDataInitial());
   List<FinanceModel> finanacList = [];
   List<FinanceModel> todayFinanacList = [];
+  List<FinanceModel> dateFinanceList = [];
   double sum = 0.0;
   double todaySum = 0.0;
   DateTime selectedTime = DateTime.now();
-
-   // Reset selected date to today
-  void resetDateToToday() {
-    selectedTime = DateTime.now();
-  }
 
   fetchData() {
     emit(FetchDataLoading());
@@ -25,8 +21,15 @@ class FetchDataCubit extends Cubit<FetchDataState> {
     try {
       //hive return box but we need list , to convert box to list we put .value.tolist
       finanacList = Hive.box<FinanceModel>('financeBox').values.toList();
+      todayFinanacList = finanacList
+        .where(
+          (element) =>
+              DateFormat.yMMMEd().format(element.date) ==
+              DateFormat.yMMMEd().format(DateTime.now()),
+        )
+        .toList();
       //this method will get all values of the day
-      fetchDateDate();
+      fetchDateDate(dateTime: selectedTime);
 
       //this method to sum all values to get my balance
       sum = 0;
@@ -50,7 +53,7 @@ class FetchDataCubit extends Cubit<FetchDataState> {
   }
 
   fetchDateDate({DateTime? dateTime}) {
-    todayFinanacList = finanacList
+    dateFinanceList = finanacList
         .where(
           (element) =>
               DateFormat.yMMMEd().format(element.date) ==

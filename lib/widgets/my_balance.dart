@@ -2,6 +2,7 @@ import 'package:finance_app/managment/fetch_data_cubit/fetch_data_cubit.dart';
 import 'package:finance_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class MyBalance extends StatelessWidget {
   const MyBalance({
@@ -35,8 +36,11 @@ class MyBalance extends StatelessWidget {
                           style: TextStyle(color: kWhiteColor, fontSize: 20),
                         ),
                         Text(
-                          //this to update my balance value
-                          state.sum.toString(),
+                          //this to fetch value and show it as currncy
+                          NumberFormat.compactCurrency(
+                                  decimalDigits: 2, symbol: '')
+                              .format(state.sum)
+                              .toString(),
                           style: TextStyle(color: kWhiteColor, fontSize: 16),
                         ),
                       ],

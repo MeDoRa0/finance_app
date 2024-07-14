@@ -12,6 +12,7 @@ Future<void> main() async {
   Hive.registerAdapter(FinanceModelAdapter());
 
   await Hive.openBox<FinanceModel>('financeBox');
+  await Hive.openBox('darkModeBox');
 
   runApp(const FinanceApp());
 }
@@ -24,10 +25,19 @@ class FinanceApp extends StatelessWidget {
     //provide the cubit to our project
     return BlocProvider(
       create: (context) => FetchDataCubit(),
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        home: SplashScreen(),
+      child: ValueListenableBuilder(
+        valueListenable: Hive.box('darkModeBox').listenable(),
+        builder: (context, box, child) {
+          var darkMode = box.get('darkMode', defaultValue: false);
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            darkTheme: ThemeData.dark(),
+            themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+            home: SplashScreen(),
+          );
+        },
       ),
     );
   }
